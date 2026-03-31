@@ -56,11 +56,12 @@ body {
 /* 5. Button Component */
 .btn {
   border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-weight: bold;
+  padding: 8px 20px; /* Reduced padding to make them smaller */
+  border-radius: 20px; /* Rounded 'pill' shape looks more modern */
+  font-size: 0.9rem; /* Slightly smaller text */
   cursor: pointer;
-  width: 100%; /* Easy to tap on mobile */
+  transition: background 0.3s ease;
+  min-width: 100px; /* Ensures they have a consistent width */
 }
 
 .btn--primary {
@@ -97,15 +98,23 @@ body {
 /* 1. Ensure the container has enough space */
 .progress-container {
   width: 100%;
-  height: 12px;
+  height: 10px;
   background-color: #e0e0e0;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  margin-bottom: 40px;
+  border-radius: 5px;
   overflow: hidden;
 
   /* THE FIX: This makes the bar stay 'above' the overlapping card */
   position: relative;
   z-index: 10;
+}
+
+/* 2. Center the Navigation Buttons */
+.navigation {
+  display: flex; /* Turns on Flexbox */
+  justify-content: center; /* Centers buttons horizontally */
+  gap: 20px; /* Adds space between the two buttons */
+  margin-top: 30px; /* Space between the card and the buttons */
 }
 
 /* 2. Adjust the Prayer Card margin so it doesn't 'choke' the bar */
