@@ -67,3 +67,29 @@ body {
   background-color: var(--primary-blue);
   color: white;
 }
+
+/* 6. Hymn-Card Component */
+.hymn-card {
+  background: #fffdf0; /* A soft, parchment-like color for music */
+  padding: 1.5rem;
+  border-left: 5px solid #ffd700; /* A 'gold' accent for the Virgin Mary */
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.hymn-card__title {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.hymn-card__lyrics {
+  text-align: center; /* Hymns are often easier to read centered */
+  line-height: 1.8;
+}
+
+.hymn-card__chorus {
+  font-weight: bold;
+  margin-top: 10px;
+}
