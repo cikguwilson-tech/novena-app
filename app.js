@@ -39,6 +39,32 @@ function renderStep() {
             <div class="content">${step.content}</div>
         </section>
     `;
+
+  // Everytime we render, we check the buttons
+  updateButtons();
+
+  // 4. Update the Progress Bar (The very bottom)
+  const progress = ((currentIndex + 1) / novenaSteps.length) * 100;
+  document.getElementById("progress-bar").style.width = progress + "%";
+}
+
+function updateButtons() {
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+
+  // 1. If at the start, hide 'Previous'
+  if (currentIndex === 0) {
+    prevBtn.style.visibility = "hidden";
+  } else {
+    prevBtn.style.visibility = "visible";
+  }
+
+  // 2. If at the end, hide 'Next'
+  if (currentIndex === novenaSteps.length - 1) {
+    nextBtn.style.visibility = "hidden";
+  } else {
+    nextBtn.style.visibility = "visible";
+  }
 }
 
 // 4. Event Listeners (The Interaction)
