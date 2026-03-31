@@ -94,13 +94,33 @@ body {
   margin-top: 10px;
 }
 
+/* 1. Ensure the container has enough space */
 .progress-container {
   width: 100%;
-  height: 8px;
+  height: 12px;
   background-color: #e0e0e0;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 4px;
   overflow: hidden;
+
+  /* THE FIX: This makes the bar stay 'above' the overlapping card */
+  position: relative;
+  z-index: 10;
+}
+
+/* 2. Adjust the Prayer Card margin so it doesn't 'choke' the bar */
+.prayer-card,
+.hymn-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+
+  /* Change -30px to a smaller number or 0 if it still blocks the bar */
+  margin-top: -10px;
+
+  position: relative;
+  z-index: 1; /* Lower than the progress bar */
 }
 
 .progress-bar {
