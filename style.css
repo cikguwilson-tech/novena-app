@@ -22,6 +22,11 @@ body {
   max-width: 500px; /* Perfect for mobile-viewing */
   margin: 0 auto;
   padding: 20px;
+
+  /* This allows the container to be the "track" for sticky items */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* 3. Header Component */
@@ -29,7 +34,12 @@ body {
   background-color: var(--primary-blue);
   color: var(--white);
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 1rem; /* Slightly reduced for more screen space */
+
+  /* The New "Sticky" Foundation */
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 /* 4. Prayer-Card Component (BEM Style) */
@@ -114,7 +124,15 @@ body {
   display: flex; /* Turns on Flexbox */
   justify-content: center; /* Centers buttons horizontally */
   gap: 20px; /* Adds space between the two buttons */
-  margin-top: 30px; /* Space between the card and the buttons */
+  /*margin-top: 30px;*/ /* Space between the card and the buttons */
+
+  /* The New "Sticky" Foundation */
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-light);
+  padding: 20px 0;
+  z-index: 100;
+  border-top: 1px solid #ddd;
 }
 
 /* 2. Adjust the Prayer Card margin so it doesn't 'choke' the bar */
