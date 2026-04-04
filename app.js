@@ -79,10 +79,24 @@ let currentIndex = 0;
 // 3. The Functions (The Logic)
 function renderStep() {
   const display = document.getElementById("novena-display");
+
+  // Safety Check: If display doesn't exist yet, stop here.
+  if (!display) return;
+
   const step = novenaSteps[currentIndex];
 
+  // Safety Check: If something went wrong with the array index
+  if (!step) {
+    console.error("Step not found at index:", currentIndex);
+    return;
+  }
+
   // IF IT'S A REGULAR PRAYER OR HYMN
-  if (step.type === "hymn" || step.type === "prayer") {
+  if (
+    step.type === "hymn" ||
+    step.type === "prayer" ||
+    step.type === "petition"
+  ) {
     // Use the 'type' to decide which CSS class to apply
     const cardClass = step.type === "hymn" ? "hymn-card" : "prayer-card";
     const titleClass =
@@ -155,18 +169,33 @@ document.getElementById("prev-btn").addEventListener("click", () => {
   }
 });
 
-// Initial call to show the first step
-renderStep();
-
 function startPetitions(setName) {
+  // A. Check if there are already petitions ahead of us.
+  // If the NEXT card is a petition, remove the old set first.
+  while (
+    novenaSteps[currentIndex + 1] &&
+    novenaSteps[currentIndex + 1].type === "petition"
+  ) {
+    novenaSteps.splice(currentIndex + 1, 1);
+  }
+
+  // B. Now proceed with the normal insertion
+
   const selectedSet = petitionSets[setName];
 
-  // 1. Remove the 'Choice' card
-  novenaSteps.splice(currentIndex, 1);
+  // 1. DO NOT remove the choice card.
+  // Just insert the 4 petitions IMMEDIATELY AFTER the choice card.
+  novenaSteps.splice(currentIndex + 1, 0, ...selectedSet);
 
-  // 2. Insert the 4 new petition cards at the current position
-  novenaSteps.splice(currentIndex, 0, ...selectedSet);
+  // 2. Move the "page" forward to the first petition we just added
+  currentIndex++;
 
   // 3. Refresh the screen to show the first petition of the set
   renderStep();
 }
+
+// CRITICAL: Keep this as the VERY LAST line of the file
+/// This is the safest way to start a Vanilla JS app
+document.addEventListener("DOMContentLoaded", () => {
+  renderStep();
+});
