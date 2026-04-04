@@ -1,4 +1,4 @@
-// 1. Our Data (The Content)
+// A. The Main Roadmap
 const novenaSteps = [
   {
     type: "hymn",
@@ -33,6 +33,11 @@ const novenaSteps = [
     `,
   },
   {
+    type: "choice",
+    title: "Select Petition Set",
+    content: "Which set are we praying today?",
+  },
+  {
     type: "hymn",
     title: "Hymn: Mary Immaculate, Star of the Morning",
     content: `
@@ -52,6 +57,22 @@ const novenaSteps = [
   },
 ];
 
+// B. The Petition "Side Roads"
+const petitionSets = {
+  set1: [
+    { type: "petition", title: "Set 1: Petition A", content: "..." },
+    { type: "petition", title: "Set 1: Petition B", content: "..." },
+    { type: "petition", title: "Set 1: Petition C", content: "..." },
+    { type: "petition", title: "Set 1: Petition D", content: "..." },
+  ],
+  set2: [
+    { type: "petition", title: "Set 2: Petition A", content: "..." },
+    { type: "petition", title: "Set 2: Petition B", content: "..." },
+    { type: "petition", title: "Set 2: Petition C", content: "..." },
+    { type: "petition", title: "Set 2: Petition D", content: "..." },
+  ],
+};
+
 // 2. The State (Where are we right now?)
 let currentIndex = 0;
 
@@ -60,17 +81,34 @@ function renderStep() {
   const display = document.getElementById("novena-display");
   const step = novenaSteps[currentIndex];
 
-  // Use the 'type' to decide which CSS class to apply
-  const cardClass = step.type === "hymn" ? "hymn-card" : "prayer-card";
-  const titleClass =
-    step.type === "hymn" ? "hymn-card__title" : "prayer-card__title";
+  // IF IT'S A REGULAR PRAYER OR HYMN
+  if (step.type === "hymn" || step.type === "prayer") {
+    // Use the 'type' to decide which CSS class to apply
+    const cardClass = step.type === "hymn" ? "hymn-card" : "prayer-card";
+    const titleClass =
+      step.type === "hymn" ? "hymn-card__title" : "prayer-card__title";
 
-  display.innerHTML = `
+    display.innerHTML = `
         <section class="${cardClass}">
             <h2 class="${titleClass}">${step.title}</h2>
             <div class="content">${step.content}</div>
         </section>
     `;
+  }
+
+  // IF IT'S THE CHOICE CARD
+  else if (step.type === "choice") {
+    display.innerHTML = `
+            <section class="prayer-card">
+                <h2>${step.title}</h2>
+                <p>${step.content}</p>
+                <div class="menu-options">
+                    <button class="btn btn--choice" onclick="startPetitions('set1')">Set 1</button>
+                    <button class="btn btn--choice" onclick="startPetitions('set2')">Set 2</button>
+                </div>
+            </section>
+        `;
+  }
 
   // Everytime we render, we check the buttons
   updateButtons();
@@ -119,3 +157,16 @@ document.getElementById("prev-btn").addEventListener("click", () => {
 
 // Initial call to show the first step
 renderStep();
+
+function startPetitions(setName) {
+  const selectedSet = petitionSets[setName];
+
+  // 1. Remove the 'Choice' card
+  novenaSteps.splice(currentIndex, 1);
+
+  // 2. Insert the 4 new petition cards at the current position
+  novenaSteps.splice(currentIndex, 0, ...selectedSet);
+
+  // 3. Refresh the screen to show the first petition of the set
+  renderStep();
+}

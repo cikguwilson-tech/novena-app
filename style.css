@@ -156,3 +156,18 @@ body {
   width: 0%; /* JS will update this! */
   transition: width 0.3s ease;
 }
+
+.menu-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn--choice {
+  background-color: var(--primary-blue);
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+}
